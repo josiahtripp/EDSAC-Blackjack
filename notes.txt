@@ -1,0 +1,39 @@
+Card Data Format:
+--------------------------------------------------
+| Suite 5-bits | NULL space 7-bits | Type 5-bits |
+--------------------------------------------------
+
+Card Encodings:
+-----------------------------
+| Suite    | Value | Binary |
+|---------------------------|
+| Spaids   | P     | 00000  |
+| Clubs    | Q     | 00001  |
+| Hearts   | W     | 00010  |
+| Diamonds | E     | 00011  |
+|---------------------------|
+|---------------------------|
+| Type     | Value | Binary |
+|---------------------------|
+| Two      | 1 F   | 00010  |
+| Three    | 1 D   | 00011  |
+| Four     | 2 F   | 00100  |
+| Five     | 2 D   | 00101  |
+| Six      | 3 F   | 00110  |
+| Seven    | 3 D   | 00111  |
+| Eight    | 4 F   | 01000  |
+| Nine     | 4 D   | 01001  |
+| Ten      | 5 F   | 01010  |
+| Jack     | 5 D   | 01011  |
+| Queen    | 6 F   | 01100  |
+| King     | 6 D   | 01101  |
+| Ace      | 7 F   | 01110  |
+|---------------------------|
+
+Card Print Subroutine:
+------------------------------
+1. Move the value (not address) of the card to C(0)
+2. Pick up self and call the subroutine
+3. The subroutine will print a full description of the card followed by a newline:
+    Example: "ACE OF SPAIDS"
+    Example: "8 OF DIAMONDS"
