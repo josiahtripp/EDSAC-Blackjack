@@ -24,129 +24,124 @@ S   3 M [16: Subtract current index from Acc]
 E   3 @ [17: Loop for next card if Acc is positive (Loop End)]
 Z     F [18: Halt (End of Program)]
 P 972 F [M(0) - Starting Card index (972)]
-P 975 F [M(1) - Stopping Card index (975)]
+P1023 F [M(1) - Stopping Card index (975)]
 P   1 F [M(2) - Increment (1)]
 P     F [M(3) - Current Card index]
 A     F [M(4) - Empty load line]
-
-T 972 K [Put the pre-"shuffled" deck at end of program]
-P   7 F [0: A of Spaids]
-Q   7 F [1: A of Clubs]
-W   7 F [2: A of Hearts]
-E   7 F [3: A of Diamonds]
 
 T 256 K [Put the card printing subroutine at line 256]
 [Prints card at C(0)]
 G     K
 T  47 K [Set M]
-P  79 @
+P  80 @
 T     Z [Restore to @]
 
 A   3 F [0: Form the link]
 T   0 M [1: Plant the link & clear Acc]
 A   0 F [2: Add C(0) to Acc]
-L1024 F [3: Shift Acc left 7 spaces]
+L1024 F [3: Shift Acc left 8 spaces]
 U   2 M [4: Set temp storage]
-R1024 F [5: Shift ACC right 7 spaces]
+R1024 F [5: Shift ACC right 8 spaces]
 S   1 M [6: Subtract M(1) from Acc]
-G  36 @ [7: Jump if card is 2-9]
+G  37 @ [7: Jump if card is 2-9]
 
     [case: Card is 10 or Face]
 O   4 M [8: Set printing mode to letter shift]
-A   5 M [9: Add table jump]
-T  11 @ [10: Plant the jump link]
-P     F [11: Jump into table]
+L     D [9: Shift Acc left 1 space]
+A   5 M [10: Add table jump]
+T  12 @ [11: Plant the jump link]
+P     F [12: Jump into table]
 
     [sub-case: Card is 10]
-O   3 M [12: Set printing mode to figure shift]
-O  11 M [13: Print '1']
-O  12 M [14: Print '0']
-E  38 @ [15: Jump to case return]
+O   3 M [13: Set printing mode to figure shift]
+O  11 M [14: Print '1']
+O  12 M [15: Print '0']
+E  39 @ [16: Jump to case return]
 
     [sub-case: Card is Jack]
-O  13 M [16: Print 'J']
-O  14 M [17: Print 'A']
-O  15 M [18: Print 'C']
-O  16 M [19: Print 'K']
-E  38 @ [20: Jump to case return]
+O  13 M [17: Print 'J']
+O  14 M [18: Print 'A']
+O  15 M [19: Print 'C']
+O  16 M [20: Print 'K']
+E  39 @ [21: Jump to case return]
 
     [sub-case: Card is Queen]
-O  11 M [21: Print 'Q']
-O  17 M [22: Print 'U']
-O  18 M [23: Print 'E']
+O  11 M [22: Print 'Q']
+O  17 M [23: Print 'U']
 O  18 M [24: Print 'E']
-O  19 M [25: Print 'N']
-E  38 @ [26: Jump to case return]
+O  18 M [25: Print 'E']
+O  19 M [26: Print 'N']
+E  39 @ [27: Jump to case return]
 
     [sub-case: Card is King]
-O  15 M [27: Print 'K']
-O  20 M [28: Print 'I']
-O  19 M [29: Print 'N']
-O  21 M [30: Print 'G']
-E  38 @ [31: Jump to case return]
+O  16 M [28: Print 'K']
+O  20 M [29: Print 'I']
+O  19 M [30: Print 'N']
+O  21 M [31: Print 'G']
+E  39 @ [32: Jump to case return]
 
     [sub-case: Card is Ace]
-O  14 M [32: Print 'A']
-O  15 M [33: Print 'C']
-O  18 M [34: Print 'E']
-E  38 @ [35: Jump to case return]
+O  14 M [33: Print 'A']
+O  15 M [34: Print 'C']
+O  18 M [35: Print 'E']
+E  39 @ [36: Jump to case return]
 
     [case: Card is 2-9]
-O   3 M [36: Set printing mode to figure shift]
-O   2 M [37: Print card type]
+O   3 M [37: Set printing mode to figure shift]
+O   2 M [38: Print card type]
 
     [Type case return]
-O   4 M [38: Print letter shift]
-O  22 M [39: Print ' ']
-O  23 M [40: Print 'O']
-O  24 M [41: Print 'F']
-O  22 M [42: Print ' ']
-T   2 M [43: Clear Acc]
-A   0 F [44: Add C(0) to Acc]
-R1024 F [45: Shift Acc right 7 spaces]
-A  25 M [46: Add table jump]
-T  48 @ [47: Plant the jump link]
-P     F [48: Jump into table]
+O   4 M [39: Print letter shift]
+O  22 M [40: Print ' ']
+O  23 M [41: Print 'O']
+O  24 M [42: Print 'F']
+O  22 M [43: Print ' ']
+T   2 M [44: Clear Acc]
+A   0 F [45: Add C(0) to Acc]
+R 512 F [46: Shift Acc right 7 spaces]
+A  25 M [47: Add table jump]
+T  49 @ [48: Plant the jump link]
+P     F [49: Jump into table]
 
     [case: Card is Spaids]
-O  30 M [49: Print 'S']
-O  12 M [50: Print 'P']
-O  14 M [51: Print 'A']
-O  20 M [52: Print 'I']
-O  31 M [53: Print 'D']
-O  30 M [54: Print 'S']
-E  77 @ [55: Jump to case return]
+O  30 M [50: Print 'S']
+O  12 M [51: Print 'P']
+O  14 M [52: Print 'A']
+O  20 M [53: Print 'I']
+O  31 M [54: Print 'D']
+O  30 M [55: Print 'S']
+E  78 @ [56: Jump to case return]
 
     [case: Card is Clubs]
-O  15 M [56: Print 'C']
-O  32 M [57: Print 'L']
-O  17 M [58: Print 'U']
-O  33 M [59: Print 'B']
-O  30 M [60: Print 'S']
-E  77 @ [61: Jump to case return]
+O  15 M [57: Print 'C']
+O  32 M [58: Print 'L']
+O  17 M [59: Print 'U']
+O  33 M [60: Print 'B']
+O  30 M [61: Print 'S']
+E  78 @ [62: Jump to case return]
 
     [case: Card is Hearts]
-O  34 M [62: Print 'H']
-O  18 M [63: Print 'E']
-O  14 M [64: Print 'A']
-O  35 M [65: Print 'R']
-O  36 M [66: Print 'T']
-O  30 M [67: Print 'S']
-E  77 @ [68: Jump to case return]
+O  34 M [63: Print 'H']
+O  18 M [64: Print 'E']
+O  14 M [65: Print 'A']
+O  35 M [66: Print 'R']
+O  36 M [67: Print 'T']
+O  30 M [68: Print 'S']
+E  78 @ [69: Jump to case return]
 
     [case: Card is Diamonds]
-O  31 M [69: Print 'D']
-O  20 M [70: Print 'I']
-O  14 M [71: Print 'A']
-O  37 M [72: Print 'M']
-O  23 M [73: Print 'O']
-O  19 M [74: Print 'N']
-O  31 M [75: Print 'D']
-O  30 M [76: Print 'S']
+O  31 M [70: Print 'D']
+O  20 M [71: Print 'I']
+O  14 M [72: Print 'A']
+O  37 M [73: Print 'M']
+O  23 M [74: Print 'O']
+O  19 M [75: Print 'N']
+O  31 M [76: Print 'D']
+O  30 M [77: Print 'S']
 
     [Suite case return]
-O  38 M [77: Print line feed]
-O  39 M [78: Print Carriage Return]
+O  38 M [78: Print line feed]
+O  39 M [79: Print Carriage Return]
 
 P     F [M(0) - Return link]
 P   5 F [M(1) - Cards 2-9 subtrator]
@@ -154,11 +149,11 @@ P     F [M(2) - Card type in high order]
 #     F [M(3) - Figure shift]
 *     F [M(4) - Letter shift]
 E   6 M [M(5) - Jump table start]
-E  12 @ [M(6) - Jump table: 10]
-E  16 @ [M(7) - Jump table: Jack]
-E  21 @ [M(8) - Jump table: Queen]
-E  27 @ [M(9) - Jump table: King]
-E     @ [M(10) - Jump table: Ace]
+E  13 @ [M(6) - Jump table: 10]
+E  17 @ [M(7) - Jump table: Jack]
+E  22 @ [M(8) - Jump table: Queen]
+E  28 @ [M(9) - Jump table: King]
+E  33 @ [M(10) - Jump table: Ace]
 Q     F [M(11) - '1' or 'Q']
 P     F [M(12) - '0' or 'P']
 J     F [M(13) - 'J']
@@ -174,10 +169,10 @@ G     F [M(21) - 'G']
 O     F [M(23) - 'O']
 F     F [M(24) - 'F']
 E  26 M [M(25) - Jump table start]
-E  49 @ [M(26) - Jump table: Spaids]
-E  56 @ [M(27) - Jump table: Clubs]
-E  62 @ [M(28) - Jump table: Hearts]
-E  69 @ [M(29) - Jump table: Diamonds]
+E  50 @ [M(26) - Jump table: Spaids]
+E  57 @ [M(27) - Jump table: Clubs]
+E  63 @ [M(28) - Jump table: Hearts]
+E  70 @ [M(29) - Jump table: Diamonds]
 S     F [M(30) - 'S']
 D     F [M(31) - 'D']
 L     F [M(32) - 'L']
@@ -188,5 +183,59 @@ T     F [M(36) - 'T']
 M     F [M(37) - 'M']
 &     F [M(38) - Line feed ]
 @     F [M(39) - Carriage Return ]
+
+T 972 K [Put the pre-"shuffled" deck at end of program]
+Q  6 F
+Q  1 D
+P  3 D
+P  1 F
+E  2 F
+E  3 D
+W  1 D
+Q  3 D
+E  2 D
+Q  7 F
+Q  1 F
+P  4 D
+W  5 F
+Q  2 F
+P  3 F
+W  2 D
+Q  4 D
+Q  3 F
+E  6 F
+P  7 F
+W  5 D
+W  1 F
+Q  2 D
+W  3 F
+E  6 D
+W  6 D
+W  7 F
+Q  5 F
+P  5 D
+E  4 F
+W  4 F
+E  4 D
+W  6 F
+P  2 D
+P  5 F
+E  7 F
+W  2 F
+P  2 F
+P  1 D
+E  1 F
+E  3 F
+Q  4 F
+P  6 F
+Q  5 D
+W  3 D
+E  1 D
+W  4 D
+P  4 F
+E  5 D
+P  6 D
+E  5 F
+Q  6 D
 
 E 64 K P F [Enter program at line 64]
