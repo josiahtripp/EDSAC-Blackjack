@@ -1,0 +1,219 @@
+[=============================================================================]
+    [Character list (HIGH ORDER): Reference with 0 A - 31 A]
+T  52 K [Set 'A' at starting address of character list C(940)]
+P 940 F ['A': Set 'A']
+T 940 K [Put the character list up against the cards C(940) - C(971)]
+P     F [0: 'P' or '0']
+Q     F [1: 'Q' or '1']
+W     F [2: 'W' or '2']
+E     F [3: 'E' or '3']
+R     F [4: 'R' or '4']
+T     F [5: 'T' or '5']
+Y     F [6: 'Y' or '6']
+U     F [7: 'U' or '7']
+I     F [8: 'I' or '8']
+O     F [9: 'O' or '9']
+J     F [10: 'J']
+#     F [11: Figure Shift]
+S     F [12: 'S' or '"']
+Z     F [13: 'Z' or '+']
+K     F [14: 'K' or '(']
+*     F [15: Letter Shift]
+.     F [16: Blank Tape]
+F     F [17: 'F' or '$']
+@     F [18: Carriage Return]
+D     F [19: 'D' or ';']
+!     F [20: Space]
+H     F [21: 'H' or Pound Currency Sign]
+N     F [22: 'N' or ',']
+M     F [23: 'M' or '.']
+&     F [24: Line Feed]
+L     F [25: 'L' or ')']
+X     F [26: 'X' or '/']
+G     F [27: 'G' or '#']
+A     F [28: 'A' or '-']
+B     F [29: 'B' or '?']
+C     F [30: 'C' or ':']
+V     F [31: 'V' or '=']
+
+
+[=============================================================================]
+    [Main Program]
+T  64 K [Load program starting at 64]
+Z     F
+G     K
+T  47 K [Set M]
+P  19 @
+T     Z [Restore @]
+T     F [0: Clear Acc]
+A   1 M [1: Add starting value to Acc]
+T   3 M [2: Set Counting variable]
+T   0 F [3: Clear Acc (Loop Start)]
+A   3 M [4: Add counting variable to Acc]
+T   0 F [5: Set C(0) and clear Acc]
+A   6 @ [6: Pick up self]
+G 256 F [7: Card value subroutine]
+T   4 M [8: Clear Acc]
+A   9 @ [9: Pick up self]
+G 512 F [10: Print value subroutine]
+T   0 F [11: Clear Acc]
+A   3 M [12: Add counting variable to Acc]
+A   2 M [13: Add increment to Acc]
+T   3 M [14: Set counting variable and clear Acc]
+A   0 M [15: Add final value to Acc]
+S   3 M [16: Subtract counting variable]
+E   3 @ [17: Loop if Acc is positive (Loop End)]
+Z     F [18: Halt (End of Program)]
+P 984 F [M(0) - Final value]
+P 972 F [M(1) - Starting Value]
+P   1 F [M(2) - Increment]
+P     F [M(3) - Counting variable]
+P     F [M(4) - Dump]
+
+[=============================================================================]
+    [Print card value subroutine - Displays the numeric value of C(0) (only for 2-11)]
+T 512 K [Put the card value subroutine at line 512]
+G     K
+T  47 K [Set M]
+P  25 @
+T     Z [Restore to @]
+A   3 F [0: Form the link]
+T   0 M [1: Plant the link & clear Acc]
+O  11 A [2: Print figure shift]
+A   0 F [3: Add C(0) to Acc]
+S   1 M [4: Subtract 10 from Acc]
+E  12 @ [5: Jump - C(0) is double digit]
+
+    [case: C(0) is single digit]
+T   3 M [6: Clear Acc]
+A   0 F [7: Add C(0) to Acc]
+L1024 F [8: Shift Acc left 8 spaces]
+T   3 M [9: Set Variable]
+O   3 M [10: Print Variable]
+E  22 @ [11: Case Return]
+
+    [case: C(0) is double digit]
+O   1 A [12: Print '1']
+S   2 M [13: Subtract 1 from Acc]
+E  18 @ [14: Jump - C(0) is 11]
+O   0 A [15: Print '0']
+T   3 M [16: Clear Acc]
+E  22 @ [17: Case Return]
+
+    [case: C(0) is 11]
+O   1 A [18: Print '1']
+S   2 M [19: Subtract 1]
+G  22 @ [20: C(0) is 11]
+O  17 F [21: Print '$']
+
+    [Case Return]
+O  24 A [22: Print line feed]
+O  18 A [23: Print Carriage Return]
+T   3 M [24: Clear Acc]
+
+P     F [M(0) - Return Link]
+P   5 F [M(1) - Constant 10]
+P     D [M(2) - Constant 1]
+P     F [M(3) - Variable]
+
+
+[=============================================================================]
+    [Card Value Subroutine - places value of card with address C(0) at c(0)]
+T 256 K [Put the card value subroutine at line 256]
+G     K
+T  47 K [Set M]
+P  23 @
+T     Z [Restore to @]
+A   3 F [0: Form the link]
+T   0 M [1: Plant the link & clear Acc]
+A   0 F [2: Add C(0) (Card Address) to Acc]
+A   1 M [3: Add empty load line]
+T   5 @ [4: Set card load line and clear Acc]
+P     F [5: Load card into Acc (Modified Line)]
+L1024 F [6: Shift Acc left 8 spaces]
+R1024 F [7: Shift Acc right 8 spaces]
+U   0 F [8: Save card type value to C(0)]
+S   2 M [9: Subtract spot card subtractor]
+G  22 @ [10: Return if spot]
+
+T   5 M [11: Clear Acc]
+A   0 F [12: Load card type value]
+T   5 M [13: Save card type value to temp and clear Acc]
+A   4 M [14: Load ten card value to Acc]
+T   0 F [15: Save ten to C(0) and clear Acc]
+A   5 M [16: Load card type value from temp]
+S   3 M [17: Subtract ace subtractor]
+G  22 @ [18: Return if ten-value]
+
+T   5 M [19: Clear Acc]
+A   2 M [20: Add Eleven]
+T   0 F [21: Save eleven to C(0)]
+T   5 M [22: Clear Acc]
+P     F [M(0) - Return Link]
+A     F [M(1) - Empty load line]
+P   5 D [M(2) - Spot card subtractor / Eleven card value]
+P   7 F [M(3) - Ace subtractor]
+P   5 F [M(4) - Ten card value]
+P     F [M(5) - Temp variable]
+
+
+
+[=============================================================================]
+T 972 K [Put the pre-"shuffled" deck at end of program C(972) - C(1023)]
+Q  1 F
+Q  1 D
+P  2 F
+P  2 D
+E  3 F
+E  3 D
+W  4 F
+Q  4 D
+E  5 F
+Q  5 D
+Q  6 F
+P  6 D
+W  7 F
+Q  2 F
+P  3 F
+W  2 D
+Q  4 D
+Q  3 F
+E  6 F
+P  7 F
+W  5 D
+W  1 F
+Q  2 D
+W  3 F
+E  6 D
+W  6 D
+W  7 F
+Q  5 F
+P  5 D
+E  4 F
+W  4 F
+E  4 D
+W  6 F
+P  2 D
+P  5 F
+E  7 F
+W  2 F
+P  2 F
+P  1 D
+E  1 F
+E  3 F
+Q  4 F
+P  6 F
+Q  5 D
+W  3 D
+E  1 D
+W  4 D
+P  4 F
+E  5 D
+P  6 D
+E  5 F
+Q  6 D
+
+
+[=============================================================================]
+    [Program Entry Point]
+E 64 K P F [Enter program at line 64]

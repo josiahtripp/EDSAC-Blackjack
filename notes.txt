@@ -33,7 +33,28 @@ Card Encodings:
 Card Print Subroutine:
 ------------------------------
 1. Move the value (not address) of the card to C(0)
-2. Pick up self and call the subroutine
+2. Pick up self and call the subroutine (wheeler jump)
 3. The subroutine will print a full description of the card followed by a newline:
     Example: "ACE OF SPAIDS"
     Example: "8 OF DIAMONDS"
+
+Hand Structure:
+----------------------------
+| N (Card Quantity) 1-Word |
+| Card #1 1-Word           |
+| ...                      |
+| Card #N 1-Word           |
+|--------------------------|
+
+Card Max Value Subroutine
+-----------------------------
+1. Move the address of the card to C(0)
+2. Pick up self and call the subroutine (wheeler jump)
+3. The subroutine will place the maximum value of the card at C(0)
+
+Hand Value Subroutine
+------------------------------
+1. Move the address of the start of the hand to c(0)
+2. Pick up self and call the subroutine (wheeler jump)
+3. The subroutine will place the lowest possible value of the hand in C(0)
+    - c(0) is set to 21 if a blackjack is present, regardless of lowest value
