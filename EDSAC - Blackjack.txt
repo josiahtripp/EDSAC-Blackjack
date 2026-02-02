@@ -1,0 +1,191 @@
+[=============================================================================]
+    [Character list (HIGH ORDER): Reference with 0 A - 31 A]
+T  52 K [Set 'A' at starting address of character list C(940)]
+P 940 F ['A': Set 'A']
+T 940 K [Put the character list at C(940) - C(971)]
+P     F [0: 'P' or '0']
+Q     F [1: 'Q' or '1']
+W     F [2: 'W' or '2']
+E     F [3: 'E' or '3']
+R     F [4: 'R' or '4']
+T     F [5: 'T' or '5']
+Y     F [6: 'Y' or '6']
+U     F [7: 'U' or '7']
+I     F [8: 'I' or '8']
+O     F [9: 'O' or '9']
+J     F [10: 'J']
+#     F [11: Figure Shift]
+S     F [12: 'S' or '"']
+Z     F [13: 'Z' or '+']
+K     F [14: 'K' or '(']
+*     F [15: Letter Shift]
+.     F [16: Blank Tape]
+F     F [17: 'F' or '$']
+@     F [18: Carriage Return]
+D     F [19: 'D' or ';']
+!     F [20: Space]
+H     F [21: 'H' or Pound Currency Sign]
+N     F [22: 'N' or ',']
+M     F [23: 'M' or '.']
+&     F [24: Line Feed]
+L     F [25: 'L' or ')']
+X     F [26: 'X' or '/']
+G     F [27: 'G' or '#']
+A     F [28: 'A' or '-']
+B     F [29: 'B' or '?']
+C     F [30: 'C' or ':']
+V     F [31: 'V' or '=']
+
+[=============================================================================]
+    [Deck of 52 cards]
+T 972 K [Put the cards at end of program C(972) - C(1023)]
+Q  1 F
+Q  1 D
+P  2 F
+P  2 D
+E  3 F
+E  3 D
+W  4 F
+Q  4 D
+E  5 F
+Q  5 D
+Q  6 F
+P  6 D
+W  7 F
+Q  2 F
+P  3 F
+W  2 D
+Q  4 D
+Q  3 F
+E  6 F
+P  7 F
+W  5 D
+W  1 F
+Q  2 D
+W  3 F
+E  6 D
+W  6 D
+W  7 F
+Q  5 F
+P  5 D
+E  4 F
+W  4 F
+E  4 D
+W  6 F
+P  2 D
+P  5 F
+E  7 F
+W  2 F
+P  2 F
+P  1 D
+E  1 F
+E  3 F
+Q  4 F
+P  6 F
+Q  5 D
+W  3 D
+E  1 D
+W  4 D
+P  4 F
+E  5 D
+P  6 D
+E  5 F
+Q  6 D
+
+[=============================================================================]
+    [Main Program]
+T 64 K
+
+    [Print Opening Title Banner]
+T     F [64: Clear Acc]
+A  65 F [65: Pick up self]
+G 256 F [66: Line-Print subroutine]
+O  15 A [67: Print Letter Shift]
+O  20 A [68: Print ' ']
+O  20 A [69: Print ' ']
+O   3 A [70: Print 'E']
+O  19 A [71: Print 'D']
+O  12 A [72: Print 'S']
+O  28 A [73: Print 'A']
+O  30 A [74: Print 'C']
+O  20 A [75: Print ' ']
+O  29 A [76: Print 'B']
+O  25 A [77: Print 'L']
+O  28 A [78: Print 'A']
+O  30 A [79: Print 'C']
+O  14 A [80: Print 'K']
+O  10 A [81: Print 'J']
+O  28 A [82: Print 'A']
+O  30 A [83: Print 'C']
+O  14 A [84: Print 'K']
+O  24 A [85: Print line feed]
+O  18 A [86: Print Carriage Return]
+O  20 A [87: Print ' ']
+O  20 A [88: Print ' ']
+O  20 A [89: Print ' ']
+O  20 A [90: Print ' ']
+O  20 A [91: Print ' ']
+O  29 A [92: Print 'B']
+O   3 A [93: Print 'E']
+O  25 A [94: Print 'L']
+O  25 A [95: Print 'L']
+O  20 A [96: Print ' ']
+O  25 A [97: Print 'L']
+O  28 A [98: Print 'A']
+O  29 A [99: Print 'B']
+O  12 A [100: Print 'S']
+O  24 A [101: Print line feed]
+O  18 A [102: Print Carriage Return]
+A 103 F [103: Pick up self]
+G 256 F [104: Line-Print subroutine]
+O   1 A [105: Print '1']
+O  28 A [106: Print '-']
+O  15 A [107: Print Letter Shift]
+O  21 A [108: Print 'H']
+O   8 A [109: Print 'I']
+O   5 A [110: Print 'T']
+O  24 A [111: Print line feed]
+O  18 A [112: Print Carriage Return]
+O  11 A [113: Print Figure Shift]
+O   2 A [114: Print '2']
+O  28 A [115: Print '-']
+O  15 A [116: Print Letter Shift]
+O  12 A [117: Print 'S']
+O   5 A [118: Print 'T']
+O  28 A [119: Print 'A']
+O  22 A [120: Print 'N']
+O  19 A [121: Print 'D']
+O  24 A [122: Print line feed]
+O  18 A [123: Print Carriage Return]
+A 124 F [124: Pick up self]
+G 256 F [125: Line-Print subroutine]
+
+G     K
+T  47 K [Set M]
+P  1 @
+T     Z [Restore to @]
+
+[=============================================================================]
+    [Print Line Subroutine]
+T 256 K
+G     K
+A   3 F [0: Form the link]
+T  10 @ [1: Plant the link and clear Acc]
+A  11 @ [2: Add quantity to Acc]
+O  11 A [3: Print figure shift]
+
+O  28 A [4: Print '-' (Loop Start)]
+S  12 @ [5: Subtract decrement from Acc]
+E   4 @ [6: Loop until negative (Loop end)]
+
+T     F [7: Clear Acc]
+O  24 A [8: Print line feed]
+O  18 A [9: Print Carriage Return]
+P     F [10: Return Link]
+P   9 F [11: Print quantity-1 (constant)]
+P     D [12: Decrement (constant)]
+
+
+[=============================================================================]
+    [Program Entry Point]
+E 64 K P F [Enter program at line 64]
