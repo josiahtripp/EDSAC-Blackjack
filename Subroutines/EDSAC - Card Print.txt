@@ -186,6 +186,7 @@ O  12 A [77: Print 'S']
 O  24 A [78: Print line feed]
 O  18 A [79: Print Carriage Return]
 
+
 P     F [M(0) - Return link]
 P   5 F [M(1) - Cards 2-9 subtrator]
 P     F [M(2) - Card type in high order]

@@ -58,3 +58,36 @@ Hand Value Subroutine
 2. Pick up self and call the subroutine (wheeler jump)
 3. The subroutine will place the lowest possible value of the hand in C(0)
     - c(0) is set to 21 if a blackjack is present, regardless of lowest value
+
+Offset Variables:
+    A - Print Characters 0-31
+    C - Card deck 0 - 51
+    H - Player's Hand 0 - 10
+    N - Dealer's Hand 0 - 10
+
+EDSAC Blackjack program structure:
+
+--------------------------------------------
+| Description               | Start | End  |
+|---------------------------|--------------|
+| IO2 (Reserved)            | 0     | 63   |
+| Title / Instructions      | 64    | 179  |
+
+
+
+
+| Hand Value Subroutine     | 764   | 823  |
+| Card Value Subroutine     | 824   | 852  |
+| P6 Subroutine             | 853   | 884  |
+| Dealer's Hand             | 885   | 895  |
+| Player's Hand             | 896   | 906  |
+| Print Line Subroutine     | 907   | 919  |
+| Print "PLAYER" Subroutine | 920   | 929  |
+| Print "DEALER" Subroutine | 930   | 939  |
+| Character List            | 940   | 971  |
+| Card Dec                  | 972   | 1023 |
+|------------------------------------------|
+
+*TO BE ADDED
+-Print Card Subroutine should work based on indirect addressing
+-All Subroutines should clear Acc after return
