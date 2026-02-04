@@ -1,0 +1,342 @@
+[=============================================================================]
+    [Deck of 52 cards]
+T  54 K [Load Location of Variable 'C']
+P 972 F [Set Value of 'C' to Address of Start of Deck at C(972)]
+T 972 K [Put the Deck at C(972) - C(1023)]
+
+
+
+
+P  7 F
+Q  7 F
+W  7 F
+E  7 F
+P  1 F
+Q  1 F
+W  1 F
+E  1 F
+P  1 D
+Q  1 D
+W  1 D
+E  1 D
+P  2 F
+Q  2 F
+W  2 F
+E  2 F
+P  2 D
+Q  2 D
+W  2 D
+E  2 D
+P  3 F
+Q  3 F
+W  3 F
+E  3 F
+P  3 D
+Q  3 D
+W  3 D
+E  3 D
+P  4 F
+Q  4 F
+W  4 F
+E  4 F
+P  4 D
+Q  4 D
+W  4 D
+E  4 D
+P  5 F
+Q  5 F
+W  5 F
+E  5 F
+P  5 D
+Q  5 D
+W  5 D
+E  5 D
+P  6 F
+Q  6 F
+W  6 F
+E  6 F
+P  6 D
+Q  6 D
+W  6 D
+E  6 D
+
+
+[=============================================================================]
+    [Character List]
+T  52 K [Load Location of Variable 'A']
+P 940 F [Set Value of Variable 'A' to Address of Start of Character List at C(940)]
+T 940 K [Put the Character List at C(940) - C(971)]
+P     F [0: 'P' or '0']
+Q     F [1: 'Q' or '1']
+W     F [2: 'W' or '2']
+E     F [3: 'E' or '3']
+R     F [4: 'R' or '4']
+T     F [5: 'T' or '5']
+Y     F [6: 'Y' or '6']
+U     F [7: 'U' or '7']
+I     F [8: 'I' or '8']
+O     F [9: 'O' or '9']
+J     F [10: 'J']
+#     F [11: Figure Shift]
+S     F [12: 'S' or '"']
+Z     F [13: 'Z' or '+']
+K     F [14: 'K' or '(']
+*     F [15: Letter Shift]
+.     F [16: Blank Tape]
+F     F [17: 'F' or '$']
+@     F [18: Carriage Return]
+D     F [19: 'D' or ';']
+!     F [20: Space]
+H     F [21: 'H' or Pound Currency Sign]
+N     F [22: 'N' or ',']
+M     F [23: 'M' or '.']
+&     F [24: Line Feed]
+L     F [25: 'L' or ')']
+X     F [26: 'X' or '/']
+G     F [27: 'G' or '#']
+A     F [28: 'A' or '-']
+B     F [29: 'B' or '?']
+C     F [30: 'C' or ':']
+V     F [31: 'V' or '=']
+
+
+[=============================================================================]
+    [Test Hands]
+T 700 K
+
+    [Test Hand 1]
+P   1 F [700: Two cards (Value of 21)]
+P   0 C [701: Card 1 (Ace of Spaids)]
+P  51 C [702: Card 2 (King of Diamonds)]
+
+    [Test Hand 2]
+P   1 F [703: Two cards (Value of 12)]
+P   0 C [704: Card 1 (Ace of Spaids)]
+P   2 C [705: Card 2 (Ace of Hearts)]
+
+    [Test Hand 3]
+P   2 F [706: Four cards (Value of 14)] 
+P   0 C [707: Card 1 (Ace of Spaids)]
+P   1 C [708: Card 2 (Ace of Clubs)]
+P   2 C [709: Card 3 (Ace of Hearts)]
+P   3 C [710: Card 4 (Ace of Diamonds)]
+
+    [Test Hand 4]
+P   1 D [711: Three Cards (Value of 25)]
+P  50 C [712: Card 1 (King of Hearts)]
+P  45 C [713: Card 2 (Queen of Clubs)]
+P  19 C [714: Card 3 (5 of Diamonds)]
+
+    [Test Hand 5]
+P   2 D [715: Five cards (Value of 21)] 
+P   0 C [716: Card 1 (Ace of Spaids)]
+P   1 C [717: Card 2 (Ace of Clubs)]
+P   2 C [718: Card 3 (Ace of Hearts)]
+P   3 C [719: Card 4 (Ace of Diamonds)]
+P  25 C [720: Card 5 (7 of Clubs)]
+
+T 512 K
+[P6 Subroutine - Prints Value of Short Positive Integer at C(0)]
+GKA3FT25@H29@VFT4DA3@TFH30@S6@T1F
+V4DU4DAFG26@TFTFO5FA4DF4FS4F
+L4FT4DA1FS3@G9@EFSFO31@E20@J995FJF!F
+
+[=============================================================================]
+    [Driving Test Program - Hand Value Subroutine]
+T  64 K [Load at C(64)]
+Z     F [64: Halt Program After Loading]
+
+
+    [Program Operations]
+G     K [Set Value of Variable @ to Current Global Address]
+O  11 A [0: Print Figure Shift]
+
+    [Hand 1]
+A  47 @ [1: Add Address of Test Hand 1 to Acc]
+T   0 F [2: Set C(0)]
+A   3 @ [3: Pick Up Self]
+G 256 F [4: Hand Value Subroutine]
+A   5 @ [5: Pick Up Self]
+G 512 F [6: P6 Subroutine]
+O  24 A [7: Print Line Feed]
+O  18 A [8: Print Carriage Return]
+T     F [9: Clear Acc]
+
+    [Hand 2]
+A  48 @ [10: Add Address of Test Hand 2 to Acc]
+T   0 F [11: Set C(0)]
+A  12 @ [12: Pick Up Self]
+G 256 F [13: Hand Value Subroutine]
+A  14 @ [14: Pick Up Self]
+G 512 F [15: P6 Subroutine]
+O  24 A [16: Print Line Feed]
+O  18 A [17: Print Carriage Return]
+T     F [18: Clear Acc]
+
+    [Hand 3]
+A  49 @ [19: Add Address of Test Hand 3 to Acc]
+T   0 F [20: Set C(0)]
+A  21 @ [21: Pick Up Self]
+G 256 F [22: Hand Value Subroutine]
+A  23 @ [23: Pick Up Self]
+G 512 F [24: P6 Subroutine]
+O  24 A [25: Print Line Feed]
+O  18 A [26: Print Carriage Return]
+T     F [27: Clear Acc]
+
+    [Hand 4]
+A  50 @ [28: Add Address of Test Hand 4 to Acc]
+T   0 F [29: Set C(0)]
+A  30 @ [30: Pick Up Self]
+G 256 F [31: Hand Value Subroutine]
+A  32 @ [32: Pick Up Self]
+G 512 F [33: P6 Subroutine]
+O  24 A [34: Print Line Feed]
+O  18 A [35: Print Carriage Return]
+T     F [36: Clear Acc]
+
+    [Hand 5]
+A  51 @ [37: Add Address of Test Hand 5 to Acc]
+T   0 F [38: Set C(0)]
+A  39 @ [39: Pick Up Self]
+G 256 F [40: Hand Value Subroutine]
+A  41 @ [41: Pick Up Self]
+G 512 F [42: P6 Subroutine]
+O  24 A [43: Print Line Feed]
+O  18 A [44: Print Carriage Return]
+T     F [45: Clear Acc]
+
+    [End of Driving Program]
+Z     F [46: Halt (End of Program)]
+
+    [Print Hand 1 Value]
+P 700 F [47: Test Hand 1]
+P 703 F [48: Test Hand 2]
+P 706 F [49: Test Hand 3]
+P 711 F [50: Test Hand 4]
+P 715 F [51: Test Hand 5]
+
+[=============================================================================]
+    [Card Value Subroutine - Places Value of Card with Address at C(0) at c(0)]
+        [Working Spaces: 1 | Returns with Cleared Acc]
+T 600 K [Load at C(600)]
+
+    [Variable 'M' Configuration]
+G     K [Set Value of Variable @ to Current Global Address]
+T  47 K [Load Location of Variable M]
+P  22 @ [Set Value of 'M' to Address of Start of Variables List]
+
+    [Program Operations]
+T     Z [Restore to @]
+A   3 F [0: Form the Link]
+T   0 M [1: Plant the Link and Clear Acc]
+A   0 F [2: Add C(0) (Card Address) to Acc]
+A   1 M [3: Add Empty Load Line]
+T   5 @ [4: Set Card Load Line and Clear Acc]
+P     F [5: Load Card into Acc (Modified Line)]
+L1024 F [6: Shift Acc Left 8 Spaces]
+R1024 F [7: Shift Acc Right 8 Spaces]
+U   0 F [8: Set C(0)]
+S   2 M [9: Subtract Spot Card Subtractor]
+G  21 @ [10: Return if Acc is negative (Card Value is Spot)]
+
+T   1 F [11: Clear Acc]
+A   0 F [12: Add C(0) to Acc]
+T   1 F [13: Set C(1) and Clear Acc]
+A   4 M [14: Add 10 to Acc]
+T   0 F [15: Set C(0) and Clear Acc]
+A   1 F [16: Add C(1) to Acc]
+S   3 M [17: Subtract 14 from Acc]
+G  21 @ [18: Return if Acc is Negative (Card is 10 Value)]
+A   2 M [19: Add 11 to Acc]
+U   0 F [20: Set C(0)]
+T   1 F [21: Clear Acc]
+P     F [M(0) - Return Link]
+A     F [M(1) - Empty Load Line]
+P   5 D [M(2) - Constant 11 (Spot Card Value)]
+P   7 F [M(3) - Constant 14 (Ace subtractor)]
+P   5 F [M(4) - Constant 10 (10 Card Value)]
+
+[=============================================================================]
+    [Hand Value Subroutine - Places Value of Hand Starting at Address C(0) at c(0)]
+        [Working Spaces: 1 | Returns with Cleared Acc]
+T 256 K [Load at C(256)]
+
+    [Variable 'M' Configuration]
+G     K [Set Value of Variable @ to Current Global Address]
+T  47 K [Load Location of Variable M]
+P  49 @ [Set Value of 'M' to Address of Start of Variables List]
+
+    [Program Operations]
+T     Z [Restore to @]
+A   3 F [0: Form the link]
+T   0 M [1: Plant the link & clear Acc]
+A   0 F [2: Add C(0) to Acc]
+A   3 M [3: Add empty load line to Acc]
+U   1 M [4: Set starting load line]
+T   6 @ [5: Set next line load line and clear Acc]
+P     F [6: Load hand size into Acc (modified)]
+T   2 M [7: Set hand size and clear Acc]
+U   4 M [8: Set Ace tally]
+U   6 M [9: Set card value total]
+
+    [Counting loop start]
+T     F [10: Clear Acc]
+A   2 M [11: Add hand size to Acc]
+S   8 M [12: Subtract 1 from Acc]
+G  33 @ [13: Jump if Acc is negative - Done adding cards]
+T   2 M [14: Set hand size (card remaining) and clear Acc]
+A   1 M [15: Add card load line to Acc]
+A   5 M [16: Add Address Increment to Acc]
+U   1 M [17: Set set card load line]
+T  19 @ [18: Set next line load line and clear Acc]
+P     F [19: Load card Address into Acc (modified)]
+T   0 F [20: Set C(0) and clear Acc]
+A  21 @ [21: Pick Up Self]
+G 600 F [22: Card Value Subroutine]
+A   0 F [23: Add C(0) to Acc]
+S   7 M [24: Subtract 11 from Acc]
+G  29 @ [25: Jump if Acc is negative (Card is not Ace)]
+A   4 M [26: Add Ace tally to Acc]
+A   8 M [27: Add 1 to Ace Tally]
+T   4 M [28: Set Ace tally and clear Acc]
+A   7 M [29: Add 11 to Acc]
+A   6 M [30: Add card value total to Acc]
+T   6 M [31: Set card value total and clear Acc]
+E  10 @ [32: Jump to Counting loop start]
+
+    [Subtract Aces loop]
+T     F [33: Clear Acc]
+A   6 M [34: Add card value total to Acc]
+S   9 M [35: Subtract 22 from Acc]
+G  46 @ [36: Jump to end if Acc is negative (Hand Value <= 21)]
+T     F [37: Clear Acc]
+A   4 M [38: Add Ace tally to Acc]
+S   8 M [39: Subtract 1 from Acc]
+G  46 @ [40: Jump to end if Acc is negative (No Aces left)]
+T   4 M [41: Set Ace tally and clear Acc]
+A   6 M [42: Add card value to Acc]
+S  10 M [43: Subtract 10 from Acc]
+U   6 M [44: Set Card Value Total]
+E  33 @ [45: Jump to Subtract Aces loop start]
+
+    [end]
+T     F [46: Clear Acc]
+A   6 M [47: Add card value to Acc]
+T   0 F [48: Set C(0) and clear Acc]
+P     F [M(0) - Return Link]
+P     F [M(1) - Starting Load Link]
+P     F [M(2) - Hand Size]
+A     F [M(3) - Empty Load Line]
+P     F [M(4) - Ace tally]
+P   1 F [M(5) - Card Address Increment]
+P     F [M(6) - Card Value Total]
+P   5 D [M(7) - Constant 11 (Ace Value)]
+P     D [M(8) - Constant 1]
+P  11 F [M(9) - Constant 22 (Bust Amount)]
+p   5 F [M(10) - Constant 10 (Ace Subtract Amount)]
+
+
+[=============================================================================]
+    [Program Entry Point]
+E 64 K P F [Enter Driving Test Program at C(64)]

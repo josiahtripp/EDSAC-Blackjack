@@ -1,0 +1,280 @@
+[=============================================================================]
+    [Deck of 52 cards]
+T  54 K [Load Location of Variable 'C']
+P 972 F [Set Value of 'C' to Address of Start of Deck at C(972)]
+T 972 K [Put the Deck at C(972) - C(1023)]
+P  7 F
+Q  7 F
+W  7 F
+E  7 F
+P  1 F
+Q  1 F
+W  1 F
+E  1 F
+P  1 D
+Q  1 D
+W  1 D
+E  1 D
+P  2 F
+Q  2 F
+W  2 F
+E  2 F
+P  2 D
+Q  2 D
+W  2 D
+E  2 D
+P  3 F
+Q  3 F
+W  3 F
+E  3 F
+P  3 D
+Q  3 D
+W  3 D
+E  3 D
+P  4 F
+Q  4 F
+W  4 F
+E  4 F
+P  4 D
+Q  4 D
+W  4 D
+E  4 D
+P  5 F
+Q  5 F
+W  5 F
+E  5 F
+P  5 D
+Q  5 D
+W  5 D
+E  5 D
+P  6 F
+Q  6 F
+W  6 F
+E  6 F
+P  6 D
+Q  6 D
+W  6 D
+E  6 D
+
+
+[=============================================================================]
+    [Character List]
+T  52 K [Load Location of Variable 'A']
+P 940 F [Set Value of Variable 'A' to Address of Start of Character List at C(940)]
+T 940 K [Put the Character List at C(940) - C(971)]
+P     F [0: 'P' or '0']
+Q     F [1: 'Q' or '1']
+W     F [2: 'W' or '2']
+E     F [3: 'E' or '3']
+R     F [4: 'R' or '4']
+T     F [5: 'T' or '5']
+Y     F [6: 'Y' or '6']
+U     F [7: 'U' or '7']
+I     F [8: 'I' or '8']
+O     F [9: 'O' or '9']
+J     F [10: 'J']
+#     F [11: Figure Shift]
+S     F [12: 'S' or '"']
+Z     F [13: 'Z' or '+']
+K     F [14: 'K' or '(']
+*     F [15: Letter Shift]
+.     F [16: Blank Tape]
+F     F [17: 'F' or '$']
+@     F [18: Carriage Return]
+D     F [19: 'D' or ';']
+!     F [20: Space]
+H     F [21: 'H' or Pound Currency Sign]
+N     F [22: 'N' or ',']
+M     F [23: 'M' or '.']
+&     F [24: Line Feed]
+L     F [25: 'L' or ')']
+X     F [26: 'X' or '/']
+G     F [27: 'G' or '#']
+A     F [28: 'A' or '-']
+B     F [29: 'B' or '?']
+C     F [30: 'C' or ':']
+V     F [31: 'V' or '=']
+
+
+[=============================================================================]
+    [Driving Test Program - Card Print Subroutine]
+T  64 K [Load at C(64)]
+Z     F [64: Halt Program After Loading]
+
+    [Variable 'M' Configuration]
+G     K [Set Value of Variable @ to Current Global Address]
+T  47 K [Load Location of Variable 'M']
+P  15 @ [Set Value of 'M' to Address of Start of Variables List]
+
+    [Program Operations]
+T     Z [Restore Variable @]
+A   0 M [0: Add Initial Card Address to Acc]
+T   2 M [1: Set Card Address Varible and Clear Acc]
+
+    [Print Card Loop]
+T     F [2: Clear Acc]
+A   2 M [3: Add Card Address Variable to Acc]
+T   0 F [4: Set C(0) and Clear Acc]
+A   5 @ [5: Pick Up Self]
+G 256 F [6: Card Print Subroutine]
+T     F [7: Clear Acc]
+A   2 M [8: Add Card Address Variable to Acc]
+A   3 M [9: Add Card Address Increment to Acc]
+T   2 M [10: Set Card Address Variable and Clear Acc]
+A   1 M [11: Add Final Card Address to Acc]
+S   2 M [12: Subtract Card Address Varible from Acc]
+E   2 @ [13: Loop if Acc is Positive (Final Card Address <= Card Address Variable)]
+
+    [End of Driving Program]
+Z     F [14: Halt (End of Program)]
+
+    [Variables List]
+P   0 C [M(0) - Initial Card Address]
+P  51 C [M(1) - Final Card Address]
+P     F [M(2) - Card Address Variable]
+P   1 F [M(3) - Card Address Increment]
+
+[=============================================================================]
+    [Print Card Subroutine - Prints Card with Address at C(0)]
+        [Working Spaces: | Returns with Cleared Acc]
+T 256 K [Load C(256)]
+
+    [Variable 'M' Configuration]
+G     K [Set Value of Variable @ to Current Global Address]
+T  47 K [Load Location of Variable M]
+P  84 @ [Set Value of 'M' to Address of Start of Variables List]
+
+    [Program Operations]
+T     Z [Restore to @]
+A   3 F [0: Form the link]
+T   0 M [1: Plant the link & clear Acc]
+A   0 F [2: Add C(0) to Acc]
+A  14 M [3: Add empty load line to Acc]
+T   5 @ [4: Set Next Line load line and clear Acc]
+P     F [5: Load the card into Acc (modified)]
+U   0 F [6: Set C(0)]
+L1024 F [7: Shift Acc left 8 spaces]
+U   2 M [8: Set temp storage]
+R1024 F [9: Shift ACC right 8 spaces]
+S   1 M [10: Subtract M(1) from Acc]
+G  41 @ [11: Jump if card is 2-9]
+
+    [case: Card is 10 or Face]
+O  15 A [12: Set printing mode to letter shift]
+L     D [13: Shift Acc left 1 space]
+A   3 M [14: Add table jump]
+T  16 @ [15: Plant the jump link]
+P     F [16: Jump into table]
+
+    [sub-case: Card is 10]
+O  11 A [17: Set printing mode to figure shift]
+O   1 A [18: Print '1']
+O   0 A [19: Print '0']
+E  43 @ [20: Jump to case return]
+
+    [sub-case: Card is Jack]
+O  10 A [21: Print 'J']
+O  28 A [22: Print 'A']
+O  30 A [23: Print 'C']
+O  14 A [24: Print 'K']
+E  43 @ [25: Jump to case return]
+
+    [sub-case: Card is Queen]
+O   1 A [26: Print 'Q']
+O   7 A [27: Print 'U']
+O   3 A [28: Print 'E']
+O   3 A [29: Print 'E']
+O  22 A [30: Print 'N']
+E  43 @ [31: Jump to case return]
+
+    [sub-case: Card is King]
+O  14 A [32: Print 'K']
+O   8 A [33: Print 'I']
+O  22 A [34: Print 'N']
+O  27 A [35: Print 'G']
+E  43 @ [36: Jump to case return]
+
+    [sub-case: Card is Ace]
+O  28 A [37: Print 'A']
+O  30 A [38: Print 'C']
+O   3 A [39: Print 'E']
+E  43 @ [40: Jump to case return]
+
+    [case: Card is 2-9]
+O  11 A [41: Set printing mode to figure shift]
+O   2 M [42: Print card type]
+
+    [Type case return]
+O  15 A [43: Print letter shift]
+O  20 A [44: Print ' ']
+O   9 A [45: Print 'O']
+O  17 A [46: Print 'F']
+O  20 A [47: Print ' ']
+T   2 M [48: Clear Acc]
+A   0 F [49: Add C(0) to Acc]
+R 512 F [50: Shift Acc right 7 spaces]
+A   9 M [51: Add table jump]
+T  53 @ [52: Plant the jump link]
+P     F [53: Jump into table]
+
+    [case: Card is Spaids]
+O  12 A [54: Print 'S']
+O   0 A [55: Print 'P']
+O  28 A [56: Print 'A']
+O   8 A [57: Print 'I']
+O  19 A [58: Print 'D']
+O  12 A [59: Print 'S']
+E  82 @ [60: Jump to case return]
+
+    [case: Card is Clubs]
+O  30 A [61: Print 'C']
+O  25 A [62: Print 'L']
+O   7 A [63: Print 'U']
+O  29 A [64: Print 'B']
+O  12 A [65: Print 'S']
+E  82 @ [66: Jump to case return]
+
+    [case: Card is Hearts]
+O  21 A [67: Print 'H']
+O   3 A [68: Print 'E']
+O  28 A [69: Print 'A']
+O   4 A [70: Print 'R']
+O   5 A [71: Print 'T']
+O  12 A [72: Print 'S']
+E  82 @ [73: Jump to case return]
+
+    [case: Card is Diamonds]
+O  19 A [74: Print 'D']
+O   8 A [75: Print 'I']
+O  28 A [76: Print 'A']
+O  23 A [77: Print 'M']
+O   9 A [78: Print 'O']
+O  22 A [79: Print 'N']
+O  19 A [80: Print 'D']
+O  12 A [81: Print 'S']
+
+    [Suite case return]
+O  24 A [82: Print line feed]
+O  18 A [83: Print Carriage Return]
+
+    [Variables List]
+P     F [M(0) - Return link]
+P   5 F [M(1) - Cards 2-9 subtrator]
+P     F [M(2) - Card type in high order]
+E   4 M [M(3) - Jump table start]
+E  17 @ [M(4) - Jump table: 10]
+E  21 @ [M(5) - Jump table: Jack]
+E  26 @ [M(6) - Jump table: Queen]
+E  32 @ [M(7) - Jump table: King]
+E  37 @ [M(8) - Jump table: Ace]
+E  10 M [M(9) - Jump table start]
+E  54 @ [M(10) - Jump table: Spaids]
+E  61 @ [M(11) - Jump table: Clubs]
+E  67 @ [M(12) - Jump table: Hearts]
+E  74 @ [M(13) - Jump table: Diamonds]
+A     F [M(14) - Empty Load Line]
+
+
+[=============================================================================]
+    [Program Entry Point]
+E 64 K P F [Enter Driving Test Program at C(64)]
