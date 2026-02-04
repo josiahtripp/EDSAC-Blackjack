@@ -30,13 +30,6 @@ Card Encodings:
 | Ace      | 7 F   | 01110  |
 |---------------------------|
 
-Card Print Subroutine:
-------------------------------
-1. Move the value (not address) of the card to C(0)
-2. Pick up self and call the subroutine (wheeler jump)
-3. The subroutine will print a full description of the card followed by a newline:
-    Example: "ACE OF SPAIDS"
-    Example: "8 OF DIAMONDS"
 
 Hand Structure:
 ----------------------------
@@ -46,18 +39,28 @@ Hand Structure:
 | Card #N 1-Word           |
 |--------------------------|
 
-Card Max Value Subroutine
+
+Card Print Subroutine:
+------------------------------
+1. Move the Address of the card to C(0)
+2. Pick up self and call the subroutine (wheeler jump)
+3. The subroutine will print a full description of the card followed by a newline:
+    Example: "ACE OF SPAIDS"
+    Example: "8 OF DIAMONDS"
+
+Card Value Subroutine
 -----------------------------
 1. Move the address of the card to C(0)
 2. Pick up self and call the subroutine (wheeler jump)
-3. The subroutine will place the maximum value of the card at C(0)
+3. The subroutine will place the value of the card at C(0)
+    *Aces give a value of 11
 
 Hand Value Subroutine
 ------------------------------
 1. Move the address of the start of the hand to c(0)
 2. Pick up self and call the subroutine (wheeler jump)
-3. The subroutine will place the lowest possible value of the hand in C(0)
-    - c(0) is set to 21 if a blackjack is present, regardless of lowest value
+3. The subroutine will place the closest value to 21
+    (without going over if possible) of the hand in C(0)
 
 Offset Variables:
     A - Print Characters 0-31
@@ -66,18 +69,15 @@ Offset Variables:
     N - Dealer's Hand 0 - 10
 
 EDSAC Blackjack program structure:
-
 --------------------------------------------
 | Description               | Start | End  |
 |---------------------------|--------------|
 | IO2 (Reserved)            | 0     | 63   |
 | Title / Instructions      | 64    | 179  |
-
-
-
-
-| Hand Value Subroutine     | 764   | 823  |
-| Card Value Subroutine     | 824   | 852  |
+| Main Program              | 180   | 371  |
+| Print Card Subroutine     | 667   | 765  |
+| Hand Value Subroutine     | 766   | 825  |
+| Card Value Subroutine     | 826   | 852  |
 | P6 Subroutine             | 853   | 884  |
 | Dealer's Hand             | 885   | 895  |
 | Player's Hand             | 896   | 906  |
@@ -87,7 +87,3 @@ EDSAC Blackjack program structure:
 | Character List            | 940   | 971  |
 | Card Dec                  | 972   | 1023 |
 |------------------------------------------|
-
-*TO BE ADDED
--Print Card Subroutine should work based on indirect addressing
--All Subroutines should clear Acc after return

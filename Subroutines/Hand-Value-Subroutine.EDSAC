@@ -3,10 +3,6 @@
 T  54 K [Load Location of Variable 'C']
 P 972 F [Set Value of 'C' to Address of Start of Deck at C(972)]
 T 972 K [Put the Deck at C(972) - C(1023)]
-
-
-
-
 P  7 F
 Q  7 F
 W  7 F
