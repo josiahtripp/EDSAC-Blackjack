@@ -42,58 +42,59 @@ V     F [31: 'V' or '=']
 T  54 K [Set 'C' at starting address of card list C(972)]
 P 972 F ['C': Set 'C']
 T 972 K [Put the cards at end of program C(972) - C(1023)]
-Q  1 F
-Q  1 D
-P  2 F
-P  2 D
-E  3 F
-E  3 D
-W  4 F
-Q  4 D
-E  5 F
-Q  5 D
-Q  6 F
-P  6 D
-W  7 F
-Q  2 F
 P  3 F
-W  2 D
-Q  4 D
-Q  3 F
-E  6 F
-P  7 F
-W  5 D
-W  1 F
-Q  2 D
-W  3 F
-E  6 D
-W  6 D
-W  7 F
-Q  5 F
-P  5 D
-E  4 F
-W  4 F
-E  4 D
-W  6 F
-P  2 D
 P  5 F
-E  7 F
-W  2 F
+Q  7 F
+Q  5 F
+E  5 F
+W  2 D
+Q  5 D
+W  7 F
+Q  3 F
+W  4 D
+P  1 F
+W  6 D
+Q  2 F
+E  4 F
 P  2 F
-P  1 D
-E  1 F
+P  4 F
+E  7 F
+E  3 D
+E  2 F
+P  5 F
+Q  6 F
 E  3 F
 Q  4 F
-P  6 F
+E  6 F
+P  2 D
+P  5 D
+W  2 F
 Q  5 D
 W  3 D
-E  1 D
-W  4 D
-P  4 F
 E  5 D
-P  6 D
-E  5 F
+W  1 F
+P  4 D
+P  3 D
+Q  1 F
+E  1 D
+W  3 F
+W  1 D
+Q  5 F
+E  6 D
+E  1 F
+P  1 D
+Q  7 F
+E  2 D
+Q  2 D
 Q  6 D
+W  7 F
+P  7 F
+P  3 F
+W  5 D
+Q  1 D
+E  4 D
+Q  3 D
+
 
 [=============================================================================]
     [Dealer's hand (1 Count + 10 cards): Reference with 0 N - 10 N]
@@ -128,6 +129,7 @@ P     F [7: Card 7]
 P     F [8: Card 8]
 P     F [9: Card 9]
 P     F [10: Card 10]
+
 
 [=============================================================================]
     [Main Program]
@@ -254,7 +256,7 @@ G 907 F [179: Line-Print subroutine]
     [Main Program]
 G     K
 T  47 K [Set M]
-P 181 @
+P 314 @
 T     Z [Restore to @]
 
     [Game Loop Start - Ask the User if they would like to play (Again)]
@@ -304,7 +306,7 @@ O  18 A [42: Print Carriage Return]
 T   0 F [43: Clear Acc]
 Z     F [44: Halt (Add User Input to Acc)]
 S   7 M [45: Subtract 4 from Acc]
-E 152 @ [46: Jump if Acc is non-negative (User Chose to Quit)]
+E 279 @ [46: Jump if Acc is non-negative (User Chose to Quit)]
 
     [Case: User Chose to Play]
     [Draw 2 cards each for dealer and player]
@@ -369,7 +371,7 @@ E 133 @ [102: Jump if Acc is non-negative (Blackjack or Bust)]
 T     F [103: Clear Acc]
 Z     F [104: Halt (Add User Input to Acc)]
 S   7 M [105: Subtract 4 from Acc]
-E 143 @ [106: Jump if Acc is non-negative (User Chose to Stand)]
+E 152 @ [106: Jump if Acc is non-negative (User Chose to Stand)]
 T     F [107: Clear Acc]
 A   0 H [108: Add Player's Hand Size to Acc]
 U   1 F [109: Set C(1)]
@@ -402,7 +404,7 @@ E  94 @ [132: Jump to Player Hit Loop Start]
 
     [Player has Blackjack or Bust]
 S   6 M [133: Subtract 1 from Acc]
-G 143 @ [134: Jump if Acc is Negative (Player Has Blackjack)]
+G 152 @ [134: Jump if Acc is Negative (Player Has Blackjack)]
 
     [Case: Player Bust]
 T     F [135: Clear Acc]
@@ -422,46 +424,205 @@ A 146 @ [146: Pick Up Self]
 G 907 F [147: Line-Print subroutine]
 A   0 M [148: Add player's cash to Acc]
 S   1 M [149: Subtract bet amount from Acc]
-G 152 @ [150: Jump if Acc is negative (Player doesn't have enough cash, quit)]
+G 279 @ [150: Jump if Acc is negative (Player doesn't have enough cash, quit)]
 E   0 @ [151: Jump if Acc is non-negative (Player has enough cash, restart game loop)]
 
     [Case: Player Blackjack]
-    [Case: Dealer's Turn]
-    [Dealer Hit Loop]
-[T     F] [152: Clear Acc]
+    [Dealer's Turn]
+T     F [152: Clear Acc]
+O  24 A [153: Print line feed]
+A 154 @ [154: Pick Up Self]
+G 930 F [155: "DEALER"-Print Subroutine]
+O  12 A [156: Print 'S']
+O  20 A [157: Print ' ']
+O  21 A [158: Print 'H']
+O  28 A [159: Print 'A']
+O  22 A [160: Print 'N']
+O  19 A [161: Print 'D']
+O  11 A [162: Print Figure Shift]
+O  30 A [163: Print ':']
+O  24 A [164: Print line feed]
+O  18 A [165: Print Carriage Return]
+O  20 A [166: Print ' ']
+A   1 N [167: Add Dealer's first card address to Acc]
+T   0 F [168: Set C(0) and Clear Acc]
+A 169 @ [169: Pick Up Self]
+G 667 F [170: Card Print Subroutine]
+O  20 A [171: Print ' ']
+A   2 N [172: Add Player's second card address to Acc]
+T   0 F [173: Set C(0) and Clear Acc]
+A 174 @ [174: Pick Up Self]
+G 667 F [175: Card Print Subroutine]
 
+    [Dealer Hit Loop]
+T     F [176: Clear Acc]
+A   9 M [177: Add Dealer's Hand Start Address to Acc]
+T   0 F [178: Set C(0) and clear Acc]
+A 179 @ [179: Pick Up Self]
+G 766 F [180: Hand Value Subroutine]
+A   0 F [181: Add C(0) to Acc]
+U   3 M [182: Set Dealer's Score]
+S  10 M [183: Subtract 21 from Acc]
+E 213 @ [184: Jump if Acc is non-negative (Blackjack or Bust)]
+A   7 M [185: Add 4 to Acc]
+E 227 @ [186: Jump is Acc is non-negative (Player's Hand >= 17, stand)]
+T     F [187: Clear Acc]
+A   0 N [188: Add Dealer's Hand Size to Acc]
+U   1 F [189: Set C(1)]
+A   6 M [190: Add 1 to Acc]
+T   0 N [191: Set Dealer's Hand Size and Clear Acc]
+A 191 @ [192: Add Start of Dealer's Hand Load Line to Acc]
+T 204 @ [193: Set Dealer's next card load line]
+
+    [Offset Dealer's Hand Loop]
+T     F [194: Clear Acc]
+A   5 M [195: Add 2 to Acc]
+A 204 @ [196: Add Dealer's Next Card Address Load Line]
+T 204 @ [197: Set Dealer's Next card load line]
+A   1 F [198: Add C(1) to Acc]
+S   6 M [199: Subtract 1 from Acc]
+U   1 F [200: Set C(1)]
+E 194 @ [201: Jump if Acc is non-negative (Increment More)]
+
+T     F [202: Clear Acc]
+A   4 M [203: Add Address of Top Card of Deck to Acc]
+P     F [204: Set Address of Dealer's Next Card]
+A   4 M [205: Add Address of Top Card of Deck to Acc]
+U   0 F [206: Set C(0)]
+A   5 M [207: Add 2 to Acc]
+T   4 M [208: Set Address of Top Card of Deck and Clear Acc]
+O  20 A [209: Print ' ']
+A 210 @ [210: Pick Up Self]
+G 667 F [211: Card Print Subroutine]
+E 176 @ [212: Jump to Dealer Hit Loop Start]
+
+
+    [Dealer has Blackjack or Bust]
+S   6 M [213: Subtract 1 from Acc]
+G 227 @ [214: Jump if Acc is Negative (Dealer Has Blackjack)]
+
+
+    [Dealer Bust]
+E 308 @ [215: Jump to Player Blackjack check]
+A   0 M [216: Add Players's Cash to Acc]
+A   1 M [217: Add Bet Amount to Acc]
+T   0 M [218: Set Player's Cash and Clear Acc]
+A 219 @ [219: Pick Up Self]
+G 930 F [220: "DEALER"-Print Subroutine]
+O  20 A [221: Print ' ']
+O  29 A [222: Print 'B']
+O   7 A [223: Print 'U']
+O  12 A [224: Print 'S']
+O   5 A [225: Print 'T']
+E 143 @ [226: End Round]
+
+
+    [Compare Scores]
+T     F [227: Clear Acc]
+A   2 M [228: Add Player's Score to Acc]
+S   3 M [229: Subtract Dealer's Score from Acc]
+G 240 @ [230: Jump if Acc is negative (Dealer Wins / Dealer Blackjack)]
+T     F [231: Clear Acc]
+A   3 M [232: Add Dealer's Score to Acc]
+S   2 M [233: Subtract Player's Score from Acc]
+G 255 @ [234: Jump if Acc is negative (Player Wins / Player Blackjack)]
+
+    [Push]
+O   0 A [235: Print 'P']
+O   7 A [236: Print 'U']
+O  12 A [237: Print 'S']
+O  21 A [238: Print 'H']
+E 143 @ [239: End Round]
+
+    [Dealer Wins / Dealer Blackjack]
+T     F [240: Clear Acc]
+A 241 @ [241: Pick Up Self]
+G 930 F [242: "DEALER"-Print Subroutine]
+A   0 M [243: Add Player's Cash to Acc]
+S   1 M [244: Subtract Bet Amount from Acc]
+T   0 M [245: Set Player's Cash and Clear Acc]
+A   3 M [246: Add Dealer's Score to Acc]
+S  10 M [247: Subtract 21 from Acc]
+O  20 A [248: Print ' ']
+E 269 @ [249: Jump if Acc is non-negative (Dealer Blackjack)]
+
+    [Dealer Wins]
+O   2 A [250: Print 'W']
+O   8 A [251: Print 'I']
+O  22 A [252: Print 'N']
+O  12 A [253: Print 'S']
+G 143 @ [254: End Round]
+
+    [Player Wins / Player Blackjack]
+T     F [255: Clear Acc]
+A 256 @ [256: Pick Up Self]
+G 920 F [257: "PLAYER"-Print Subroutine]
+A   0 M [258: Add Player's Cash to Acc]
+A   1 M [259: Add Bet Amount to Acc]
+T   0 M [260: Set Player's Cash and Clear Acc]
+A   2 M [261: Add Player's Score to Acc]
+S  10 M [262: Subtract 21 from Acc]
+O  20 A [263: Print ' ']
+G 250 @ [264: Jump if Acc is negative (Normal Player Win)]
+
+    [Player Blackjack]
+A   0 M [265: Add Player's Cash to Acc]
+A   6 M [266: Add 1 to Acc]
+A   7 M [267: Add 4 to Acc]
+T   0 M [268: Set Player's Cash and Clear Acc]
+
+    [Normal Blackjack]
+O  29 A [269: Print 'B']
+O  25 A [270: Print 'L']
+O  28 A [271: Print 'A']
+O  30 A [272: Print 'C']
+O  14 A [273: Print 'K']
+O  10 A [274: Print 'J']
+O  28 A [275: Print 'A']
+O  30 A [276: Print 'C']
+O  14 A [277: Print 'K']
+E 143 @ [278: End Round]
 
     [Case: User Chose to Quit or Not Enough Cash]
     [Exit Message]
-O  15 A [152: Print Letter Shift ]
-O  17 A [153: Print 'F']
-O   8 A [154: Print 'I']
-O  22 A [155: Print 'N']
-O  28 A [156: Print 'A']
-O  25 A [157: Print 'L']
-O  20 A [158: Print ' ']
-O  30 A [159: Print 'C']
-O  28 A [160: Print 'A']
-O  12 A [161: Print 'S']
-O  21 A [162: Print 'H']
-O  11 A [163: Print Figure Shift]
-O  30 A [164: Print ':']
-T     F [165: Clear Acc]
-A   0 M [166: Add player's cash to Acc]
-T   0 F [167: Set C(0)]
-A 168 @ [168: Pick Up Self]
-G 853 F [169: P6 Subroutine]
-O  15 A [170: Print Letter Shift]
-O  24 A [171: Print line feed]
-O  18 A [172: Print Carriage Return]
-O  27 A [173: Print 'G']
-O   9 A [174: Print 'O']
-O   9 A [175: Print 'O']
-O  19 A [176: Print 'D']
-O  29 A [177: Print 'B']
-O   6 A [178: Print 'Y']
-O   3 A [179: Print 'E']
-Z     F [180: Halt (End of Program)]
+O  15 A [279: Print Letter Shift ]
+O  17 A [280: Print 'F']
+O   8 A [281: Print 'I']
+O  22 A [282: Print 'N']
+O  28 A [283: Print 'A']
+O  25 A [284: Print 'L']
+O  20 A [285: Print ' ']
+O  30 A [286: Print 'C']
+O  28 A [287: Print 'A']
+O  12 A [288: Print 'S']
+O  21 A [289: Print 'H']
+O  11 A [290: Print Figure Shift]
+O  30 A [291: Print ':']
+T     F [292: Clear Acc]
+A   0 M [293: Add player's cash to Acc]
+T   0 F [294: Set C(0)]
+A 295 @ [295: Pick Up Self]
+G 853 F [296: P6 Subroutine]
+O  15 A [297: Print Letter Shift]
+O  24 A [298: Print line feed]
+O  18 A [299: Print Carriage Return]
+O  27 A [300: Print 'G']
+O   9 A [301: Print 'O']
+O   9 A [302: Print 'O']
+O  19 A [303: Print 'D']
+O  29 A [304: Print 'B']
+O   6 A [305: Print 'Y']
+O   3 A [306: Print 'E']
+Z     F [307: Halt (End of Program)]
+
+    [Dealer Bust when player Blackjack]
+T     F [308: Clear Acc]
+A   2 M [309: Add Player's Score to Acc]
+S  10 M [310: Subtract 21 from Acc]
+E 255 @ [311: Jump if Acc is non-negative (Player has Blackjack)]
+T     F [312: Clear Acc]
+E 216 @ [313: Jump back to Dealer Bust]
+
 P  50 F [M(0) - Player's Cash ]
 P   5 F [M(1) - Bet Amount]
 P     F [M(2) - Player's Score]
