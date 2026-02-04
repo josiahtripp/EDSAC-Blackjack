@@ -73,8 +73,9 @@ EDSAC Blackjack program structure:
 | Description               | Start | End  |
 |---------------------------|--------------|
 | IO2 (Reserved)            | 0     | 63   |
-| Title / Instructions      | 64    | 179  |
-| Main Program              | 180   | 371  |
+| Title / Instructions      | 64    | 180  |
+| Main Program              | 181   | 505  |
+| ... (Empty Space)         | 506   | 666  |
 | Print Card Subroutine     | 667   | 765  |
 | Hand Value Subroutine     | 766   | 825  |
 | Card Value Subroutine     | 826   | 852  |
